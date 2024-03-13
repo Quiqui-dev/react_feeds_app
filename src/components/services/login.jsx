@@ -1,0 +1,22 @@
+import { LOGIN_USER_API } from "../constants/urls/urls"
+import axiosInstance from "./axiosInstance"
+
+export const handleLoginUser = async (email, password) => {
+
+    try {
+
+        const loginUser = {
+            email_address: email,
+            password: password
+        }
+
+        const response = await axiosInstance.post(LOGIN_USER_API, loginUser)
+        
+        console.log(response.data)
+        // setUser(response.data)
+        // setUser in state
+    } catch (err) {
+        // Non-2XX response code
+        console.log(err)
+    }
+}
