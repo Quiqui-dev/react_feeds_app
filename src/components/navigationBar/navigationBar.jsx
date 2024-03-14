@@ -1,10 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
 import { Fragment } from "react";
 import "./navigation.styles.scss"
+import { useSelector } from "react-redux";
 
 const NavigationBar = () => {
 
-    const isLoggedIn = false;
+    const isLoggedOn = useSelector( (state) => state.auth.isLoggedOn)
+    
+
     return (
         <Fragment>
         <div className="navigation-bar">
@@ -12,7 +15,7 @@ const NavigationBar = () => {
                 HOME
             </Link>
 
-            {isLoggedIn ?
+            {isLoggedOn ?
             <div className="nav-links-container">
                 <Link className="nav-link" to="/logout">
                     LOGOUT
@@ -32,7 +35,6 @@ const NavigationBar = () => {
                 </div>
             </>
             } 
-
 
 
         </div>

@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useState} from "react"
 import Button from "../../button/button"
 import FormInput from "../../form_input/formInput"
 import { handleLoginUser } from "../../services/login"
+import { useDispatch,} from "react-redux"
+import { setAuth } from "../../../redux/actions/authActions"
+import { useNavigate } from "react-router-dom"
 
 const defaultFormFields = {
     email: '',
@@ -13,6 +16,9 @@ const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     const {email, password} = formFields
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
     }
@@ -22,8 +28,11 @@ const SignInForm = () => {
         event.preventDefault()
 
         try {
-            await handleLoginUser(email, password)
+            const user = await handleLoginUser(email, password)
+            
+            dispatch(setAuth(user))
             resetFormFields()
+            navigate("/")
         } catch (err) {
             console.log("Error logging in", err)
         }

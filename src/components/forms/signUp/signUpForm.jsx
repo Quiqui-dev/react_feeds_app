@@ -2,6 +2,9 @@ import { useState } from "react"
 import Button from "../../button/button"
 import FormInput from "../../form_input/formInput"
 import { handleCreateUser } from "../../services/createUser"
+import { useDispatch} from "react-redux"
+import { setAuth } from "../../../redux/actions/authActions"
+
 
 const defaultFormFields = {
     displayName: '',
@@ -14,6 +17,8 @@ const SignUpForm = () => {
 
     const [formFields, setFormFields] = useState(defaultFormFields)
     const {displayName, email, password, confirmPassword} = formFields
+
+    const dispatch = useDispatch()
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
@@ -28,10 +33,11 @@ const SignUpForm = () => {
         }
 
         try {
-            await handleCreateUser(
+            const user = await handleCreateUser(
                 displayName, email, password
             )
 
+            dispatch(setAuth(user))
             resetFormFields()
         } catch (error) {
             console.log("Error", error)
