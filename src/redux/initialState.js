@@ -5,6 +5,6 @@ export const initialState = {
         displayName: null,
         email: null,
         apiKey: null,
-        isLoggedOn: null
+        isLoggedOn: false
     }
 }

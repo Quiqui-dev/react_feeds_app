@@ -1,44 +1,31 @@
-import { Outlet, Link } from "react-router-dom";
-import { Fragment } from "react";
-import "./navigation.styles.scss"
 import { useSelector } from "react-redux";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import {Fragment} from "react";
+import NavigationButton from "./GenericButton";
+import { routeList } from "../routes/routeList";
+import NavigationMenu from "./NavigationMenu";
 
 const NavigationBar = () => {
 
     const isLoggedOn = useSelector( (state) => state.auth.isLoggedOn)
-    
 
     return (
         <Fragment>
-        <div className="navigation-bar">
-            <Link className="logo-container" to="/">
-                HOME
-            </Link>
+        <AppBar position="static">
+            <Toolbar>
 
-            {isLoggedOn ?
-            <div className="nav-links-container">
-                <Link className="nav-link" to="/logout">
-                    LOGOUT
-                </Link>
-            </div>
-            :
-            <>
-                <div className="nav-links-container">
-                    <Link className="nav-link" to="/sign-in">
-                        SIGN-IN
-                    </Link>
-                </div>
-                <div className="nav-links-container">
-                    <Link className="nav-link" to="/sign-up">
-                        SIGN-UP
-                    </Link>
-                </div>
-            </>
-            } 
+            <NavigationMenu isLoggedOn={isLoggedOn}/>
+            
+            {
+                routeList.map( (item) => (
+                    <NavigationButton key={item.id} item={item} hide={isLoggedOn}/>
+                ))
+            }
 
 
-        </div>
-        <Outlet />
+            </Toolbar>
+        </AppBar>
         </Fragment>
     );
 }

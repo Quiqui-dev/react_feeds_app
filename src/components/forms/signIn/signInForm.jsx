@@ -1,10 +1,11 @@
 import { useState} from "react"
-import Button from "../../button/button"
-import FormInput from "../../form_input/formInput"
 import { handleLoginUser } from "../../services/login"
 import { useDispatch,} from "react-redux"
 import { setAuth } from "../../../redux/actions/authActions"
 import { useNavigate } from "react-router-dom"
+
+import Button from "@mui/material/Button"
+import { Box, FormControl, TextField } from "@mui/material"
 
 const defaultFormFields = {
     email: '',
@@ -45,31 +46,45 @@ const SignInForm = () => {
     }
 
     return (
-        <div>
-            <h2>Already have an account?</h2>
-            <span>Sign in with your email and password</span>
-
-            <form onSubmit={handleSubmit}>
-                <FormInput
-                    label="Email"
-                    type="email"
-                    required
-                    onChange={handleChange}
-                    name="email"
-                    value={email}
-                />
-                <FormInput
-                    label="Password"
-                    type="password"
-                    required
-                    onChange={handleChange}
-                    name="password"
-                    value={password}
-                />
-                <Button type="submit">Login</Button>
-            </form>
-
-        </div>
+        <Box
+        component="section"
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+        >
+        <form onSubmit={handleSubmit}>
+            <h4>Already have an account?</h4>
+            <TextField
+                required
+                label="Email"
+                type="email"
+                onChange={handleChange}
+                name="email"
+                value={email}
+                fullWidth
+                margin="normal"
+            />
+            <TextField 
+                required
+                type="password"
+                label="Password"
+                onChange={handleChange}
+                name="password"
+                value={password}
+                fullWidth
+                margin="normal"
+            />
+            <Box justifyContent="center" alignItems="center" display="flex">
+                <Button 
+                type="submit"
+                variant="outlined"
+                color="primary"
+                >
+                    Login
+                </Button>
+            </Box>
+        </form>
+        </Box>
     )
 }
 
